@@ -35,6 +35,7 @@ app.get("/",(req,res) => {
 });
 
 import userRouter from "./routes/user.rotues.js";
+import { Chat } from "./models/chat.mode.js";
 app.use('/api/v1/user',userRouter);
 
 const users  = new Map();
@@ -49,20 +50,31 @@ io.on('connection',(socket) => {
         
     });
 
-    socket.on('send-message',({message, userId, targetId}) => {
+    socket.on('send-message',async({message, userId, targetId}) => {
         console.log(`Message from ${userId} to ${targetId}: ${message}`);
         
         const targetSocketId = users.get(targetId);
         console.log("target socketID",targetSocketId);
         
-
         if (targetSocketId) {
+           await Chat.create({
+                message,
+                sender: userId,
+                receiver: targetId,
+                isDelevered:true
+            })
             io.to(targetSocketId).emit('receive-message',{
                 message,
                 sender: userId
             })
         } else {
             console.log(`Target user ${targetId} is not connected!`);
+            await Chat.create({
+                message,
+                sender: userId,
+                receiver: targetId,
+                isDelevered: false
+            })
         }
 
     })
