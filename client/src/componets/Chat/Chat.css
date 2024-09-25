@@ -1,0 +1,89 @@
+/* Main chat container */
+.chat-container {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    background-color: #f0f0f0;
+    margin-top: 10px;
+  }
+  
+  /* Chat messages container (scrollable area) */
+  .chat-messages {
+    flex: 1; 
+    padding: 20px;
+    overflow-y: auto;
+    background-color: #e5ddd5; /* WhatsApp-like background */
+  }
+  
+  /* Chat input container at the bottom */
+  .chat-input-container {
+    display: flex;
+    padding: 10px;
+    background-color: #ededed;
+    border-top: 1px solid #ddd;
+    align-items: center;
+  }
+  
+  /* Chat input field */
+  .chat-input {
+    flex: 1;
+    padding: 10px;
+    border: none;
+    border-radius: 20px;
+    background-color: white;
+    outline: none;
+  }
+  
+  /* Chat send button */
+  .chat-send-button {
+    margin-left: 10px;
+    padding: 10px 20px;
+    background-color: #075e54;
+    color: white;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    font-weight: bold;
+  }
+  
+  /* Styling for individual messages */
+  .message {
+    display: flex;
+    margin-bottom: 15px;
+  }
+  
+  /* Styles for messages sent by the current user */
+  .message.me {
+    justify-content: flex-end;
+  }
+  
+  .message.me .message-content {
+    background-color: #dcf8c6; /* Light green for sender */
+  }
+  
+  /* Styles for messages sent by others */
+  .message.other {
+    justify-content: flex-start;
+  }
+  
+  .message.other .message-content {
+    background-color: #ffffff; /* White background for receiver */
+  }
+  
+  /* Common styling for all messages */
+  .message-content {
+    max-width: 60%;
+    padding: 10px;
+    border-radius: 10px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    position: relative;
+  }
+  
+  /* Timestamp */
+  .message-timestamp {
+    font-size: 0.8em;
+    color: gray;
+    margin-top: 5px;
+    text-align: right;
+  }
+  

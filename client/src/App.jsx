@@ -10,12 +10,14 @@ import { SERVER } from "./constant";
 import { useDispatch } from "react-redux";
 import { loginSuccess } from "./auth/authSlice";
 import Chat from "./componets/Chat/Chat";
+import Navbar from "./componets/Navbar/Navbar";
 
 function App() {
 
   const [loading,setLoading] = useState(true);
   const dispatch = useDispatch()
   const navigate = useNavigate();
+  const location = useLocation()
 
   useEffect(() => {
        const checkAuth = async() => {
@@ -42,15 +44,17 @@ function App() {
        checkAuth()
   },[])
 
+  const shouldHideNavbar = location.pathname === "/login" || location.pathname === "/";
+
   return (
     <>
-      
-   
+       {!shouldHideNavbar && <Navbar />}
    <Routes>
     <Route path="/" element={<Register/>}/>
     <Route path="/login" element={<Login/>}/>
-    <Route path="/home" element={<Home/>}/>
-    <Route path="/chat/:id" element={<Chat/>}/>
+    <Route path="/home" element={<Home />}>
+          <Route path="chat/:id" element={<Chat />} />
+    </Route>
    </Routes>
     </>
   );

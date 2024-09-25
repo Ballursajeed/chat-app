@@ -5,13 +5,13 @@ import { useParams } from 'react-router-dom';
 import { io } from 'socket.io-client';
 import { SERVER } from '../../constant';
 import Messages from '../Messages/Messages';
+import "./Chat.css"
 
 const Chat = () => {
 
   const { id } = useParams()
   const [input, setInput] = useState('');
   const [messages, setMessages] = useState([]); 
-  const [myMessage, setMyMessage] = useState([]); 
 
   const user = useSelector((state) => state.auth.user)
 
@@ -47,17 +47,20 @@ const Chat = () => {
     };
   }, [currentUserID]);
 
+  
+
   useEffect(() => {
     const getMyMessages = async() => {
         const res = await axios.get(`${SERVER}/user/getAllMessages/${id}`,{
            withCredentials: true
          });
          setMessages([...messages,...res.data.messages]);
-         console.log("res.data:",res.data.messages[0].sender,user?._id);
          
        }
-         getMyMessages()
-  },[])
+       
+        getMyMessages();
+      
+    }, []);
 
   const submitHandler = (e) => {
     e.preventDefault();
@@ -81,24 +84,23 @@ const Chat = () => {
   };
   
   return (
-    <div>
-      <input 
-        type="text"
-        placeholder="Enter your message"
-        onChange={(e) => setInput(e.target.value)}
-        value={input}
-      />
-      
-      <button onClick={submitHandler}>Send</button>
-  
-      <div className="output">
+    <div className='chat-container'>
+      <div className='chat-messages'>
         {messages.map((msg, index) => (
-          <div key={index}>
-            <Messages message={msg.message} sender={msg?.sender === user?._id ? 'me' : 'other'} timeStamp={msg.timestamp} />
-          </div>
+          <Messages key={index} message={msg.message} sender={msg?.sender === user?._id ? 'me' : 'other'} timeStamp={msg.timestamp} />
         ))}
-       
       </div>
+
+      <form className='chat-input-container' onSubmit={submitHandler}>
+        <input 
+          type="text"
+          placeholder="Type a message..."
+          className="chat-input"
+          onChange={(e) => setInput(e.target.value)}
+          value={input}
+        />
+        <button type="submit" className="chat-send-button">Send</button>
+      </form>
     </div>
   );
 }

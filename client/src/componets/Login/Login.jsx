@@ -3,7 +3,7 @@ import React, { useState } from 'react'
 import { SERVER } from '../../constant.js';
 import { loginFailure, loginStart, loginSuccess } from '../../auth/authSlice.js';
 import { useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const Login = () => {
     const [username, setUsername] = useState('')
@@ -52,6 +52,10 @@ const Login = () => {
         onChange={(e) => setPassword(e.target.value) } />
         
         <button onClick={hangleSubmit}>submit</button>
+      </div>
+      <div>
+        don't have an accout??
+        <Link to={"/"}>register</Link>
       </div>
     </>
   )
