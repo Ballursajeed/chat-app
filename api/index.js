@@ -45,49 +45,66 @@ io.on('connection',(socket) => {
 
     console.log("User is Connected! with id: ",socket.id);
 
-    socket.on('register', (userId) => {
-        users.set(userId, socket.id);
-        console.log(`Registered:`,users);
+    socket.on('register', ({userId}) => {
+        if (userId) {
+            users.set(userId, socket.id);
+            console.log(`Registered:`, users, userId);
+          } else {
+            console.error('userId is not provided or invalid');
+          }
         
     });
 
     socket.on('send-message', async ({ message, sender, receiver }) => {
         try {
-            console.log(`Message from ${sender} to ${receiver}: ${message}`);
-            
-            let chat = await Chat.findOne({
-                sender: new mongoose.Types.ObjectId(sender),
-                receiver: new mongoose.Types.ObjectId(receiver),
-            });
-    
-            if (!chat) {
-                chat = await Chat.create({
-                    sender: new mongoose.Types.ObjectId(sender),
-                    receiver: new mongoose.Types.ObjectId(receiver),
-                    messages: [message],
-                });
-            } else {
-                chat.messages.push(message);
-                await chat.save();  
-            }
-    
-            const targetSocketId = users.get(receiver);
-            if (targetSocketId) {
-                io.to(targetSocketId).emit('receive-message', {
-                    message,
-                    sender
-                });
-            } else {
-                io.to(targetSocketId).emit('receive-message', {
-                    message,
-                    sender
-                });
-            }
-        } catch (error) {
-            console.error("Error handling send-message:", error);
-        }
-    });
+          console.log(`Message from ${sender} to ${receiver}: ${message}`);
+         
+          let chat = await Chat.findOne({
+            sender: new mongoose.Types.ObjectId(sender),
+            receiver: new mongoose.Types.ObjectId(receiver),
+          });
+      
+          const messageObj = {
+            message: message,
+            timestamp: new Date(),
+            sender
+          };
 
+         
+
+          const senderSocketId = users.get(sender);
+          
+          io.to(senderSocketId).emit('myMessage',{
+            message:messageObj,
+            sender,
+            timestamp: messageObj.timestamp,
+          })
+
+      
+          if (!chat) {
+            chat = await Chat.create({
+              sender: new mongoose.Types.ObjectId(sender),
+              receiver: new mongoose.Types.ObjectId(receiver),
+              messages: [messageObj], 
+            });
+          } else {
+            chat.messages.push(messageObj); 
+            await chat.save();
+          }
+      
+          const targetSocketId = users.get(receiver);
+          if (targetSocketId) {
+            io.to(targetSocketId).emit('receive-message', {
+              message:messageObj,
+              sender,
+              timestamp: messageObj.timestamp,
+            });
+          }
+        } catch (error) {
+          console.error("Error handling send-message:", error);
+        }
+      });
+      
     socket.on("disconnect", () => {
         console.log('User disconnected:', socket.id);
         for (let [userID, socketId] of users.entries()) {

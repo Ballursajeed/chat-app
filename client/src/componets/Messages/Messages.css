@@ -1,0 +1,57 @@
+/* Chat container styles */
+.box {
+    padding: 5px;
+    display: flex;
+    margin-bottom: 10px;
+  }
+  
+  /* Align sender messages to the right and receiver to the left */
+  .me {
+    justify-content: flex-end;
+  }
+  
+  .other {
+    justify-content: flex-start;
+  }
+  
+  /* Common message styles */
+  .message {
+    padding: 8px 12px;
+    display: inline-block;
+    border-radius: 12px;
+    max-width: 60%; /* Limit width to avoid long message stretching */
+    word-wrap: break-word;
+    position: relative;
+  }
+  
+  /* Sent (my) message bubble */
+  .sent {
+    background-color: #dcf8c6; /* Light green like WhatsApp */
+    text-align: right;
+  }
+  
+  /* Received message bubble */
+  .received {
+    background-color: aliceblue; /* Light blue for other messages */
+    text-align: left;
+  }
+  
+  /* Add a timestamp inside the message bubble */
+  .timestamp {
+    font-size: 10px;
+    color: gray;
+    position: absolute;
+    bottom: -12px;
+    right: 10px;
+    white-space: nowrap;
+  }
+  
+  /* Add more space between sent and received messages */
+  .me .message {
+    border-bottom-right-radius: 0;
+  }
+  
+  .other .message {
+    border-bottom-left-radius: 0;
+  }
+  
