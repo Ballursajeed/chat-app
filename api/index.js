@@ -36,6 +36,7 @@ app.get("/",(req,res) => {
 
 import userRouter from "./routes/user.rotues.js";
 import { Chat } from "./models/chat.mode.js";
+import mongoose from "mongoose";
 app.use('/api/v1/user',userRouter);
 
 const users  = new Map();
@@ -50,37 +51,42 @@ io.on('connection',(socket) => {
         
     });
 
-    socket.on('send-message',async({message, userId, targetId}) => {
-        console.log(`Message from ${userId} to ${targetId}: ${message}`);
-        
-        const targetSocketId = users.get(targetId);
-        console.log("target socketID",targetSocketId);
-        
-        if (targetSocketId) {
-           await Chat.create({
-                message,
-                sender: userId,
-                receiver: targetId,
-                isDelevered:true
-            })
-            io.to(targetSocketId).emit('receive-message',{
-                message,
-                sender: userId
-            })
-        } else {
-            console.log(`Target user ${targetId} is not connected!`);
-            await Chat.create({
-                message,
-                sender: userId,
-                receiver: targetId,
-                isDelevered: false
-            })
-        }
-
-    })
-
-    console.log("users map:",users);
+    socket.on('send-message', async ({ message, sender, receiver }) => {
+        try {
+            console.log(`Message from ${sender} to ${receiver}: ${message}`);
+            
+            let chat = await Chat.findOne({
+                sender: new mongoose.Types.ObjectId(sender),
+                receiver: new mongoose.Types.ObjectId(receiver),
+            });
     
+            if (!chat) {
+                chat = await Chat.create({
+                    sender: new mongoose.Types.ObjectId(sender),
+                    receiver: new mongoose.Types.ObjectId(receiver),
+                    messages: [message],
+                });
+            } else {
+                chat.messages.push(message);
+                await chat.save();  
+            }
+    
+            const targetSocketId = users.get(receiver);
+            if (targetSocketId) {
+                io.to(targetSocketId).emit('receive-message', {
+                    message,
+                    sender
+                });
+            } else {
+                io.to(targetSocketId).emit('receive-message', {
+                    message,
+                    sender
+                });
+            }
+        } catch (error) {
+            console.error("Error handling send-message:", error);
+        }
+    });
 
     socket.on("disconnect", () => {
         console.log('User disconnected:', socket.id);

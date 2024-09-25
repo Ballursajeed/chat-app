@@ -1,3 +1,5 @@
+import mongoose from "mongoose";
+import { Chat } from "../models/chat.mode.js";
 import { User } from "../models/user.model.js";
 
 const userRegister = async(req,res) => {
@@ -142,8 +144,65 @@ const checkAuth = async(req,res) => {
     }
 }
 
+const getAllUsers = async(req,res) => {
+   try {
+     const users = await User.find({});
+     res.status(200).json({
+         message:"Users fetched successfully!",
+         status:200,
+         success:true,
+         users
+     })
+   } catch (error) {
+    return res.status(500).json({
+        message: "OOPS!! Something Went Wrong While Fetching a Users!!",
+        status: 500,
+        errorMessage: error.message,
+        error
+     })
+   }
+}
+
+const getMyMessages = async(req,res) => {
+
+    try {
+        const sender = req.params;
+    
+        const receiver = req.user?._id;
+        const chat = await Chat.findOne({
+            sender:  new mongoose.Types.ObjectId(sender),
+            receiver: new mongoose.Types.ObjectId(receiver),
+        });
+
+        if (!chat) {
+            return res.status(404).json({
+                message:"Chats are Empty!",
+                status:404,
+                success:false
+            })
+        }
+    
+      res.status(200).json({
+        message: "Messages Fetched Successfully!",
+        status:200,
+        success:true,
+        messages: chat?.messages || []
+      })
+    } catch (error) {
+        return res.status(500).json({
+            message: "OOPS!! Something Went Wrong While Fetching a Messages!!",
+            status: 500,
+            errorMessage: error.message,
+            error
+         })
+    }
+
+}
+
 export {
     userRegister,
     userLogin,
-    checkAuth
+    checkAuth,
+    getAllUsers,
+    getMyMessages
 }

@@ -9,6 +9,7 @@ import axios from "axios";
 import { SERVER } from "./constant";
 import { useDispatch } from "react-redux";
 import { loginSuccess } from "./auth/authSlice";
+import Chat from "./componets/Chat/Chat";
 
 function App() {
 
@@ -49,6 +50,7 @@ function App() {
     <Route path="/" element={<Register/>}/>
     <Route path="/login" element={<Login/>}/>
     <Route path="/home" element={<Home/>}/>
+    <Route path="/chat/:id" element={<Chat/>}/>
    </Routes>
     </>
   );
