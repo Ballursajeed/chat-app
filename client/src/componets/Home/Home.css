@@ -6,12 +6,14 @@
     margin-top: 50px;
   }
   
-  /* Left side: users list */
   .users {
-    width: 30%; /* 30% width for users list */
+    width: 30%; 
     background-color: #fff;
     border-right: 1px solid #e0e0e0;
-    overflow-y: auto; /* Add scroll if the list is long */
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column; 
+    margin-bottom: 30px;
   }
   
   .user {
@@ -82,7 +84,7 @@
   }
   
   .user-list {
-    max-height: 400px; /* Limit height */
+    flex: 1;
     overflow-y: auto; /* Scroll if overflow */
   }
   
@@ -100,3 +102,13 @@
   .user-list span {
     margin-left: 10px; /* Space between avatar and name */
   }
+
+/* Profile section */
+.prfofile {
+  padding: 10px;
+  background-color: #fff;
+  border-top: 1px solid #e0e0e0;
+  display: flex;
+  align-items: center;
+  box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1); 
+}

@@ -40,7 +40,7 @@ const Login = () => {
 
   return (
     <>
-      <div className="container">
+      <div className="loginContainer">
         <input type="text" 
         placeholder='enter username' 
         value={username} 

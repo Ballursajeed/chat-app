@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import {SERVER} from "../../constant.js"
 import { useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { loginStart,loginSuccess } from '../../auth/authSlice.js';
 
 
@@ -57,7 +57,7 @@ const Register = () => {
 
   return (
     <>
-      <div className="container">
+      <div className="registerContainer">
         <input type="text" 
         placeholder='enter username' 
         value={username} 
@@ -75,6 +75,12 @@ const Register = () => {
         value={password} 
         onChange={(e) => setPassword(e.target.value) } />
         <button onClick={hangleSubmit}>submit</button>
+      </div>
+      <div>
+        already Have an Account?
+        <Link to={'/login'}>
+          Login
+        </Link>
       </div>
     </>
   )

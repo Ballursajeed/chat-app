@@ -38,6 +38,8 @@ const Home = () => {
    const filteredUsers = users.filter(user =>
     user?.username?.toLowerCase().includes(searchTerm.toLowerCase()) // Assuming users have a 'name' property
   );
+  console.log("auth User:",authUser);
+  
 
   return (
     <div className='container'>
@@ -53,11 +55,19 @@ const Home = () => {
           {filteredUsers.map((user) => (
             <div key={user?._id} onClick={() => handleNavigation(user?._id)}>
               <Avatar user={user} /> 
-              <span>{user.name}</span> {/* Display user name */}
             </div>
           ))}
         </div>
+        <div className="prfofile">
+         <div className="blogHeader">
+          <img className="avatar" 
+             src={authUser?.avatar ? authUser?.avatar : '/default-profile-image.webp'}
+             alt="User Avatar" />
+         <div className="username"> {authUser?.username}</div>
+       </div>
+       </div>
       </div>
+      
       {/* <Chat targetUser={} /> */}
       <div className="chat">
        <Outlet />
