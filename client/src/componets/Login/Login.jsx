@@ -4,6 +4,8 @@ import { SERVER } from '../../constant.js';
 import { loginFailure, loginStart, loginSuccess } from '../../auth/authSlice.js';
 import { useDispatch } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css'; 
 
 const Login = () => {
     const [username, setUsername] = useState('')
@@ -27,13 +29,31 @@ const Login = () => {
         user: res.data.user,
         token: res.data.accessToken
      }))
-     console.log(res.data);
-    navigate("/home")
+     toast.success('LoggedIn Successfully!', {
+      position: "top-center",
+      autoClose: 1000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      onClose: () => {
+        navigate("/home")
+      }
+  })
+   
       }
 
       } catch (error) {
         console.log(error?.response);
         dispatch(loginFailure)
+        toast.error(`${error?.response?.data?.message}`,{
+          position: "top-center",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+        })
       }
     
 
@@ -75,6 +95,7 @@ const Login = () => {
      </div>
 
      </div>
+     <ToastContainer />
     </>
   )
 }

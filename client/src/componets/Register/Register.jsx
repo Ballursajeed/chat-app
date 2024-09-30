@@ -5,7 +5,8 @@ import { useDispatch } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import { loginStart,loginSuccess } from '../../auth/authSlice.js';
 import './register.css'
-
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css'; // Import the styles
 
 const Register = () => {
 
@@ -43,28 +44,45 @@ const Register = () => {
  
        if (res.data.status === 201) {
         dispatch(loginStart())
+        toast.success('Registered Successfully!', {
+          position: "top-center",
+          autoClose: 1000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          onClose: async () => {  // Ensure navigation happens after toast closes
+            // Login request after registration
             const loginRes = await axios.post(`${SERVER}/user/login`, {
                 username,
                 password
             }, { withCredentials: true });
 
             if (loginRes.data.status === 200) {
-                console.log(loginRes.data);
+              dispatch(loginSuccess({
+                     user: loginRes.data.user,
+                     token: loginRes.data.accessToken
+              }));
 
-                dispatch(loginSuccess({
-                    user: loginRes.data.user,
-                    token: loginRes.data.accessToken
-                 }))
-              navigate("/home")
-
+              navigate("/home");  // Navigate after successful login
             }
+        }
+      })
+            
 
        }
  
      
        } catch (error) {
         console.log(error.response);
-        
+        toast.error(`${error?.response?.data?.message}`,{
+          position: "top-center",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+        })
        }
 
     }
@@ -141,6 +159,7 @@ const Register = () => {
      </div>
       
        
+     <ToastContainer />
     
     </>
   )
