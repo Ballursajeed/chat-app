@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "nodemon index.js",
-    "build": "babel controllers middlewares models routes --out-dir dist"
+    "build": "babel index.js controllers middlewares models routes cloudinary db --out-dir dist"
   },
   "repository": {
     "type": "git",
