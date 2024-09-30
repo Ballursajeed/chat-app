@@ -198,6 +198,39 @@ const getAllUsers = async(req,res) => {
    }
 }
 
+const getSingleUser = async(req,res) => {
+    try {
+        const userId = req.params;
+    
+        const user = await User.findById({
+            _id:new mongoose.Types.ObjectId(userId)
+        });
+    
+        if (!user) {
+            return res.status(404).json({
+                message: "User Not Found!",
+                status:404,
+                success: false
+            })
+        }
+    
+        res.status(200).json({
+            message:"User Fetched Successfully!",
+            status:200,
+            success:true,
+            user
+        })
+    } catch (error) {
+        return res.status(500).json({
+            message: "OOPS!! Something Went Wrong While Fetching a User!!",
+            status: 500,
+            errorMessage: error.message,
+            error
+         })
+    }
+
+}
+
 const getMyMessages = async(req,res) => {
 
     try {
@@ -291,5 +324,6 @@ export {
     getAllUsers,
     getMyMessages,
     getAllMessages,
-    logOut
+    logOut,
+    getSingleUser
 }

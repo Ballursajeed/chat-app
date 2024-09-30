@@ -12,6 +12,7 @@ import { loginSuccess } from "./auth/authSlice";
 import Chat from "./componets/Chat/Chat";
 import Navbar from "./componets/Navbar/Navbar";
 import Profile from "./componets/Profile/Profile";
+import SingleUser from "./componets/SingleUser/SingleUser";
 
 function App() {
 
@@ -56,6 +57,7 @@ function App() {
     <Route path="/home" element={<Home />}>
           <Route path="chat/:id" element={<Chat />} />
           <Route path="profile/" element={<Profile />} />
+          <Route path="single-user/:id" element={<SingleUser />} />
     </Route>
    </Routes>
     </>
