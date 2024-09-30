@@ -1,11 +1,9 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import "./Avatar.css"
-import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
 const Avatar = ({user,isOnline}) => {
 
-  const navigate = useNavigate();
   const authUser = useSelector((state) => state.auth.user);
 
 
@@ -15,10 +13,14 @@ const Avatar = ({user,isOnline}) => {
         user?._id === authUser?._id ? <></> : 
       <div className="blogHeader">
         <div className="avatar-container">
-        <span className={isOnline ? 'status-dot online' : 'status-dot offline'}></span>
+        <div className="imgAvatar">
         <img className="avatar" 
              src={user?.avatar ? user?.avatar : '/default-profile-image.webp'}
              alt="User Avatar" />
+        <span className={isOnline ? 'status-dot online' : 'status-dot offline'}></span>
+
+        </div>
+       
           <div className="username"> {user?.username}</div>
         </div>
         

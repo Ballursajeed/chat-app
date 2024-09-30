@@ -58,7 +58,7 @@ const Home = () => {
          <div className="user-list">
           {filteredUsers.map((user) => (
             <div key={user?._id} onClick={() => handleNavigation(user?._id)}>
-              <Avatar user={user} isOnline={user?.isOnline} /> 
+              <Avatar user={user} isOnline={user?.isOnline || false} /> 
             </div>
           ))}
         </div>
