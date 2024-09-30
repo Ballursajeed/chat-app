@@ -12,7 +12,8 @@ const Chat = () => {
   const { id } = useParams()
   const [input, setInput] = useState('');
   const [messages, setMessages] = useState([]); 
-
+  const [selectedUser, setSelectedUser] = useState(' '); 
+ 
   const user = useSelector((state) => state.auth.user)
 
   const currentUserID = user?._id; 
@@ -41,7 +42,6 @@ const Chat = () => {
       
     });
 
-    // 
     return () => {
       socket.disconnect();
     };
@@ -55,6 +55,7 @@ const Chat = () => {
            withCredentials: true
          });
          setMessages([...messages,...res.data.messages]);
+         setSelectedUser(res.data.user)
          
        }
        
@@ -67,12 +68,8 @@ const Chat = () => {
     
     if (input && id) {
 
-
-
       const socket = io('http://localhost:3000');
-      
-      
-
+ 
       socket.emit('send-message', {
         message: input,
         sender: currentUserID, 
@@ -84,7 +81,16 @@ const Chat = () => {
   };
   
   return (
+    <>
+     <div className="selectedUserHeader">
+    <img className="selectedAvatar" 
+         src={selectedUser?.avatar ? selectedUser?.avatar : '/default-profile-image.webp'}
+         alt="User Avatar" />
+      <div className="selectedUsername"> {selectedUser?.username}</div>
+    
+   </div>
     <div className='chat-container'>
+     
       <div className='chat-messages'>
         {messages.map((msg, index) => (
           <Messages key={index} message={msg.message} sender={msg?.sender === user?._id ? 'me' : 'other'} timeStamp={msg.timestamp} />
@@ -102,6 +108,8 @@ const Chat = () => {
         <button type="submit" className="chat-send-button">Send</button>
       </form>
     </div>
+    </>
+   
   );
 }
 

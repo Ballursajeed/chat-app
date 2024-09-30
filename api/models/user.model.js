@@ -25,6 +25,10 @@ const userSchema = new mongoose.Schema(
       avatar:{
         type: String // cloudinary url
       },
+      isOnline:{
+        type: Boolean,
+        default: false
+      },
       accessToken:{
         type: String
       }

@@ -202,17 +202,29 @@ const getMyMessages = async(req,res) => {
 
 const getAllMessages = async(req,res) => {
         const sender = req.params;
+
+        const senderInfo = await User.findById({
+            _id: new mongoose.Types.ObjectId(sender)
+        });
+
+        if (!senderInfo) {
+            return res.status(404).json({
+                message: "User not Found!",
+                status:404,
+            success:false            
+        })
+        }
     
         const receiver = req.user?._id;
         const incommingChat = await Chat.findOne({
             sender:  new mongoose.Types.ObjectId(sender),
             receiver: new mongoose.Types.ObjectId(receiver),
-        }).sort({createdAt: -1}).lean();;
+        }).lean();
 
         const outGoingChat = await Chat.findOne({
             sender:  new mongoose.Types.ObjectId(receiver),
             receiver: new mongoose.Types.ObjectId(sender),
-        }).sort({ createdAt: -1 }).lean();;
+        }).lean();
 
         let messages = [];
 
@@ -225,13 +237,14 @@ const getAllMessages = async(req,res) => {
         }
     
         // Sort all messages by timestamp in descending order (newest first)
-        messages.sort((a, b) => new Date(b.timestamp) - new Date(b.timestamp));
+        messages.sort((a, b) => new Date(a.timestamp) - new Date(b.timestamp));
 
     res.status(200).json({
         message: "All messages fetched Successfully!",
         status:200,
         success: true,
-        messages
+        messages,
+        user:senderInfo
     })
 
 }

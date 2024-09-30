@@ -7,15 +7,13 @@
     margin-top: 10px;
   }
   
-  /* Chat messages container (scrollable area) */
   .chat-messages {
     flex: 1; 
     padding: 20px;
     overflow-y: auto;
-    background-color: #e5ddd5; /* WhatsApp-like background */
+    background-color: #e5ddd5; 
   }
   
-  /* Chat input container at the bottom */
   .chat-input-container {
     display: flex;
     padding: 10px;
@@ -24,7 +22,6 @@
     align-items: center;
   }
   
-  /* Chat input field */
   .chat-input {
     flex: 1;
     padding: 10px;
@@ -34,7 +31,6 @@
     outline: none;
   }
   
-  /* Chat send button */
   .chat-send-button {
     margin-left: 10px;
     padding: 10px 20px;
@@ -46,19 +42,17 @@
     font-weight: bold;
   }
   
-  /* Styling for individual messages */
   .message {
     display: flex;
     margin-bottom: 15px;
   }
   
-  /* Styles for messages sent by the current user */
   .message.me {
     justify-content: flex-end;
   }
   
   .message.me .message-content {
-    background-color: #dcf8c6; /* Light green for sender */
+    background-color: #dcf8c6;
   }
   
   /* Styles for messages sent by others */
@@ -79,11 +73,31 @@
     position: relative;
   }
   
-  /* Timestamp */
   .message-timestamp {
     font-size: 0.8em;
     color: gray;
     margin-top: 5px;
     text-align: right;
   }
+
+  .selectedUserHeader {
+    display: flex;
+    align-items: center; 
+    justify-content: flex-start; 
+    cursor: pointer;
+    background-color: #f0f2f5;
+  }
   
+  .selectedUsername {
+    font-weight: 600; 
+    font-size: 1rem;
+    margin-right: auto;  
+  }
+  
+  .selectedAvatar {
+    width: 40px; 
+    height: 40px;
+    border-radius: 50%; 
+    object-fit: cover; 
+    margin-right: 10px; 
+  }

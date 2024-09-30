@@ -37,6 +37,7 @@ app.get("/",(req,res) => {
 import userRouter from "./routes/user.rotues.js";
 import { Chat } from "./models/chat.mode.js";
 import mongoose from "mongoose";
+import { User } from "./models/user.model.js";
 app.use('/api/v1/user',userRouter);
 
 const users  = new Map();
@@ -44,15 +45,21 @@ const users  = new Map();
 io.on('connection',(socket) => {
 
     console.log("User is Connected! with id: ",socket.id);
-
-    socket.on('register', ({userId}) => {
+    socket.on('register', async({userId}) => {
         if (userId) {
+          const dbUser = await User.findById({
+            _id: userId
+          }
+          );
+
+          dbUser.isOnline = true;
+          dbUser.save()
             users.set(userId, socket.id);
-            console.log(`Registered:`, users, userId);
+            console.log(`Registered:`, users);
+            
           } else {
             console.error('userId is not provided or invalid');
           }
-        
     });
 
     socket.on('send-message', async ({ message, sender, receiver }) => {
@@ -70,8 +77,6 @@ io.on('connection',(socket) => {
             sender
           };
 
-         
-
           const senderSocketId = users.get(sender);
           
           io.to(senderSocketId).emit('myMessage',{
@@ -80,7 +85,6 @@ io.on('connection',(socket) => {
             timestamp: messageObj.timestamp,
           })
 
-      
           if (!chat) {
             chat = await Chat.create({
               sender: new mongoose.Types.ObjectId(sender),
@@ -105,11 +109,20 @@ io.on('connection',(socket) => {
         }
       });
       
-    socket.on("disconnect", () => {
+    socket.on("disconnect", async() => {
         console.log('User disconnected:', socket.id);
         for (let [userID, socketId] of users.entries()) {
             if (socketId === socket.id) {
+              const dbUser = await User.findById({
+                _id: userID
+              }
+              );
+    console.log("deleting User:",dbUser);
+    
+              dbUser.isOnline = false;
+              dbUser.save()
                 users.delete(userID);
+                
                 break;
             }
         }

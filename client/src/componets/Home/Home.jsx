@@ -6,16 +6,16 @@ import Avatar from '../Avatar/Avatar';
 import { useNavigate } from 'react-router-dom';
 import "./Home.css";
 import { Outlet } from 'react-router-dom';
+import { io } from 'socket.io-client';
 
 const Home = () => {
 
   const authUser = useSelector((state) => state.auth.user);
   const [users,setUsers] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
+  const [isOnline,setIsOnline] = useState(new Set());
 
-  console.log("auth user",authUser);
-  
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   useEffect(() => {
         const fetchAllUsers = async() => {
@@ -24,10 +24,15 @@ const Home = () => {
              });
              setUsers(res.data.users)
         }
-        fetchAllUsers()
+        fetchAllUsers();
+       
+        const socket = io('http://localhost:3000');
+
+        socket.emit('register', {userId:authUser?._id});
+
+
    },[])
 
-   console.log("users: ",authUser);
 
    const handleNavigation = (id) => {
      navigate(`/home/chat/${id}`)
@@ -36,9 +41,8 @@ const Home = () => {
    }
 
    const filteredUsers = users.filter(user =>
-    user?.username?.toLowerCase().includes(searchTerm.toLowerCase()) // Assuming users have a 'name' property
+    user?.username?.toLowerCase().includes(searchTerm.toLowerCase()) 
   );
-  console.log("auth User:",authUser);
   
 
   return (
@@ -54,7 +58,7 @@ const Home = () => {
          <div className="user-list">
           {filteredUsers.map((user) => (
             <div key={user?._id} onClick={() => handleNavigation(user?._id)}>
-              <Avatar user={user} /> 
+              <Avatar user={user} isOnline={user?.isOnline} /> 
             </div>
           ))}
         </div>

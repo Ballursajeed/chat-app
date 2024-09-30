@@ -40,7 +40,6 @@
     display: flex;
     flex-direction: column;
     background-color: #e5ddd5; /* WhatsApp-like background */
-    padding: 20px;
     overflow-y: auto; /* Add scroll for messages */
   }
   
@@ -76,11 +75,12 @@
   }
   
   .search-bar {
-    width: 100%;
+    width: 92%;
     padding: 10px;
     border-radius: 5px;
     border: 1px solid #ccc;
-    margin-bottom: 10px; /* Space between search bar and user list */
+    margin-bottom: 10px; 
+    background-color: rgb(230, 229, 229);
   }
   
   .user-list {
