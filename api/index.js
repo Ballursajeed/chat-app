@@ -13,7 +13,7 @@ const server = createServer(app)
 const io = new Server(server, {
     connectionStateRecovery: {},
     cors: {
-        origin: 'http://localhost:5173',  // Frontend address
+        origin: 'https://chat-app-client-h8ym.onrender.com',  // Frontend address
         methods: ['GET', 'POST'],
         credentials: true
     }
@@ -22,7 +22,7 @@ const io = new Server(server, {
 connectDB()
 
 app.use(cors({
-    origin: 'http://localhost:5173',
+    origin: 'https://chat-app-client-h8ym.onrender.com',
     credentials: true,  // Allow cookies and credentials,
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     allowedHeaders: ['Content-Type', 'Authorization'],
