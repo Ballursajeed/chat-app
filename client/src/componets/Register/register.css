@@ -1,0 +1,133 @@
+
+
+.registerContainer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    background: linear-gradient(to right, #6a11cb, #2575fc); 
+}
+
+.register {
+    padding: 40px;
+    margin: 10px;
+    width: 350px;
+    background-color: white;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    border-radius: 15px;
+    text-align: center;
+}
+
+.register h2 {
+    font-size: 24px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.register form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.register input {
+    padding: 10px;
+    font-size: 14px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    transition: border-color 0.3s ease;
+}
+
+.register input:focus {
+    border-color: #2575fc;
+    outline: none;
+}
+
+.btn {
+    background-color: #03193f;
+    color: white;
+    border: none;
+    padding: 10px;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.img-btn{
+    background-color: #175ace;
+    color: white;
+    border: none;
+    padding: 10px;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+.img-btn:hover {
+    background-color: #6a11cb;
+}
+
+.btn:hover {
+    background-color: #6a11cb;
+}
+
+.imageUpload {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 15px;
+}
+
+.imageUpload label {
+    font-size: 16px;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.customFileUpload {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #2575fc;
+    color: white;
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    font-size: 14px;
+}
+
+.customFileUpload:hover {
+    background-color: #6a11cb;
+    color: white;
+
+}
+.customFileUpload input {
+    display: none;
+}
+
+.uploadIcon {
+    margin-right: 8px;
+    font-size: 18px; /* Adjust icon size */
+}
+
+.fileName {
+    margin-top: 5px;
+    font-size: 14px;
+    color: #555;
+}
+.register p {
+    margin-top: 10px;
+    color: #555;
+}
+
+.register a {
+    color: #2575fc;
+    text-decoration: none;
+}
+
+.register a:hover {
+    text-decoration: underline;
+}

@@ -62,7 +62,7 @@ const Home = () => {
             </div>
           ))}
         </div>
-        <div className="prfofile">
+        <div className="prfofile" onClick={() => navigate('/home/profile')}>
          <div className="blogHeader">
           <img className="avatar" 
              src={authUser?.avatar ? authUser?.avatar : '/default-profile-image.webp'}

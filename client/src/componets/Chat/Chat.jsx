@@ -6,6 +6,8 @@ import { io } from 'socket.io-client';
 import { SERVER } from '../../constant';
 import Messages from '../Messages/Messages';
 import "./Chat.css"
+import { Link, useNavigate } from 'react-router-dom';
+
 
 const Chat = () => {
 
@@ -14,7 +16,8 @@ const Chat = () => {
   const [messages, setMessages] = useState([]); 
   const [selectedUser, setSelectedUser] = useState(' '); 
  
-  const user = useSelector((state) => state.auth.user)
+  const user = useSelector((state) => state.auth.user);
+  const navigate = useNavigate()
 
   const currentUserID = user?._id; 
 
@@ -82,7 +85,7 @@ const Chat = () => {
   
   return (
     <>
-     <div className="selectedUserHeader">
+     <div className="selectedUserHeader" onClick={() => navigate(`/home/single-user/${selectedUser?._id}`)} >
     <img className="selectedAvatar" 
          src={selectedUser?.avatar ? selectedUser?.avatar : '/default-profile-image.webp'}
          alt="User Avatar" />

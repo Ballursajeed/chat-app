@@ -49,3 +49,63 @@
   .offline {
     background-color: gray; 
   }
+
+  /* Responsive for mobile devices */
+@media screen and (max-width: 768px) {
+
+  .blogHeader {
+    display: flex;
+    align-items: center; 
+    justify-content: flex-start; 
+    width: 100%;
+    padding-bottom: 1rem;
+    cursor: pointer;
+  }
+  
+
+  .user {
+    padding: 5px;
+    font-size: 10px; /* Slightly smaller text for mobile */
+  }
+
+  .username {
+    font-size:12px; /* Adjust font size for better readability */
+  }
+
+  .avatar-container {
+    position: relative;
+    display: inline-block;
+    width: 35px; 
+    height: 35px; 
+  }
+
+  
+
+  .status-dot {
+    position: absolute;
+    width: 8px; 
+    height: 8px;
+    border-radius: 50%;
+    border: 1px solid white; 
+    bottom: 0; 
+    right: 0; 
+  }
+  
+
+}
+
+/* For slightly larger mobile screens (tablets) */
+@media screen and (min-width: 769px) and (max-width: 1024px) {
+  .container {
+    flex-direction: row; /* Keep the layout horizontal */
+    height: auto;
+  }
+
+  .users {
+    width: 35%; /* Users list takes 35% width on tablet */
+  }
+
+  .chat {
+    width: 65%; /* Chat takes 65% width on tablet */
+  }
+}

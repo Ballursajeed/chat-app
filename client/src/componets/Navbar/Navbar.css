@@ -97,8 +97,12 @@
     gap: 1rem;
   }
   .nav-links.open {
+    margin-top: 8px;
       transform: translateX(0);
-      height: 250px;
+      height: 150px;
+      border-radius: 8px;
+      width: 100px;
+      margin-right: 17px;
   }
 
   .hamburger {

@@ -15,18 +15,20 @@ const Navbar = () => {
 
     const logoutHandler = async(e) => {
         e.preventDefault();
-    //   try {
-    //      const res = await axios.post(`${SERVER}/user/logout`,  {},
-    //         { withCredentials: true });
+      try {
+         const res = await axios.post(`${SERVER}/user/logout`,  {},
+            { withCredentials: true });
            
-    //         if (res.data.status === 200) {
-    //           navigate("/login")
-    //         }
+            if (res.data.status === 200) {
+                console.log(res.data);
+                
+              navigate("/login")
+            }
         
-    //   } catch (error) {
-    //     console.log(error);
+      } catch (error) {
+        console.log(error);
         
-    //   }
+      }
        
     }
 
@@ -56,9 +58,9 @@ const Navbar = () => {
                     <button className='btn' onClick={logoutHandler}>Logout</button>
                 </li>
                 <li>
-                    <Link to="/profile">
+                    <Link to="/home/profile">
                         <button className='avatar'>
-                            {/* <img src={auth.user?.avatar ? auth.user.avatar : '/default-profile-image.webp'} alt='P' /> */}
+                            <img src={auth.user?.avatar ? auth.user.avatar : '/default-profile-image.webp'} alt='P' />
                             {auth.user?.username}
                         </button>
                     </Link>

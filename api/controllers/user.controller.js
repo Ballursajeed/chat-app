@@ -137,6 +137,32 @@ const userLogin = async(req,res) =>{
     
 }
 
+const logOut = async(req,res) => {
+
+    const user = req.user;
+
+    await User.findByIdAndUpdate(user._id,{
+        $unset:{
+            accessToken: null
+        },
+    },
+       {
+          new: true
+       }
+    )
+     res.clearCookie('accessToken', {
+        httpOnly: true,
+        secure: true        
+    });
+
+    res.status(200).json({
+        message: "User LoggedOut Successfully!",
+        status:200,
+        user
+    })
+
+}
+
 const checkAuth = async(req,res) => {
     try {
         const user = req.user; 
@@ -264,5 +290,6 @@ export {
     checkAuth,
     getAllUsers,
     getMyMessages,
-    getAllMessages
+    getAllMessages,
+    logOut
 }

@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { checkAuth, getAllMessages, getAllUsers, getMyMessages, userLogin, userRegister } from "../controllers/user.controller.js";
+import { checkAuth, getAllMessages, getAllUsers, getMyMessages, logOut, userLogin, userRegister } from "../controllers/user.controller.js";
 import { validateUser } from "../middlewares/auth.middleware.js";
 import { upload } from "../middlewares/multer.middleware.js";
 
@@ -12,6 +12,7 @@ router.route('/register').post(upload.fields([
     }
 ]),userRegister);
 router.route('/login').post(userLogin);
+router.route('/logout').post(validateUser,logOut);
 router.route('/me').get(validateUser,checkAuth);
 router.route('/geAllUsers').get(getAllUsers);
 router.route('/getMyMessages/:id').get(validateUser,getMyMessages);

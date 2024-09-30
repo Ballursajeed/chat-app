@@ -4,6 +4,7 @@ import {SERVER} from "../../constant.js"
 import { useDispatch } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import { loginStart,loginSuccess } from '../../auth/authSlice.js';
+import './register.css'
 
 
 const Register = () => {

@@ -1,0 +1,95 @@
+/* Profile page container */
+.Profile-container {
+    display: flex;
+    justify-content: space-between; /* Space between profile and blogs */
+    align-items: flex-start; /* Aligns both elements at the top */
+    padding: 5rem 2rem 2rem 2rem;
+    gap: 1rem;
+    margin-top: 60px;
+}
+
+/* User profile card */
+.Profile-card {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    width: 400px;
+    text-align: center;
+    padding: 1.5rem;
+    background-color: #fff;
+    border-radius: 8px;
+    position: sticky; /* Make it static while scrolling */
+    top: 2rem;
+}
+
+.Profile-card img {
+    width: 100%; /* Ensure image takes up full card width */
+    border-radius: 50%; /* Make the avatar circular */
+    max-width: 150px; /* Set a max size for the avatar */
+    margin-bottom: 1rem;
+}
+
+.Profile-fullname {
+    font-size: 1.5rem;
+    margin: 1rem 0 0.5rem;
+}
+
+.Profile-username {
+    color: grey;
+    font-size: 1.2rem;
+    margin-bottom: 1.5rem;
+}
+
+.Profile-blog{
+    color: grey;
+    font-size: 1.2rem;
+    margin-bottom: 1.5rem;
+}
+
+.delete-btn {
+    border: none;
+    outline: 0;
+    padding: 10px;
+    color: white;
+    background-color: #f43c3c;
+    cursor: pointer;
+    width: 100%;
+    margin: 10px 0;
+    font-size: 16px;
+    border-radius: 5px;
+}
+
+.delete-btn:hover {
+    background-color: #fe0b0b;
+}
+
+.edit-btn{
+    border: none;
+    outline: 0;
+    padding: 10px;
+    color: white;
+    background-color: #4CAF50;
+    cursor: pointer;
+    width: 100%;
+    margin: 10px 0;
+    font-size: 16px;
+    border-radius: 5px;
+}
+
+.edit-btn:hover{
+    background-color: #45e069;
+}
+
+/* User blogs section */
+.Profile-userblogs {
+    flex: 1; /* Take up remaining space */
+    width: 500px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.Profile-userblogs h2 {
+    font-size: 1.8rem;
+    margin-bottom: 1rem;
+}
+

@@ -11,6 +11,7 @@ import { useDispatch } from "react-redux";
 import { loginSuccess } from "./auth/authSlice";
 import Chat from "./componets/Chat/Chat";
 import Navbar from "./componets/Navbar/Navbar";
+import Profile from "./componets/Profile/Profile";
 
 function App() {
 
@@ -54,6 +55,7 @@ function App() {
     <Route path="/login" element={<Login/>}/>
     <Route path="/home" element={<Home />}>
           <Route path="chat/:id" element={<Chat />} />
+          <Route path="profile/" element={<Profile />} />
     </Route>
    </Routes>
     </>

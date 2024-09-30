@@ -12,8 +12,9 @@ const Login = () => {
     const dispatch = useDispatch()
     const navigate = useNavigate()
 
-    const hangleSubmit = async() => {
+    const submitHandler = async(e) => {
         dispatch(loginStart())
+        e.preventDefault()
       try {
           const res = await axios.post(`${SERVER}/user/login`,{
               username,
@@ -40,23 +41,40 @@ const Login = () => {
 
   return (
     <>
-      <div className="loginContainer">
-        <input type="text" 
-        placeholder='enter username' 
-        value={username} 
-        onChange={(e) => setUsername(e.target.value) }/>
-       
-        <input type="text" 
-        placeholder='enter password'
-        value={password} 
-        onChange={(e) => setPassword(e.target.value) } />
-        
-        <button onClick={hangleSubmit}>submit</button>
-      </div>
+      <div className="registerContainer">
+     
+     <div className="register">
+      <h2>Login</h2>
+        <form action="" method='post' onSubmit={submitHandler}>
+          <div>
+            <label htmlFor="username">Username: </label>
+            <input type="text" 
+                  placeholder='Enter Username...' 
+                  id='username' 
+                  value={username}
+                  onChange={(e) => setUsername(e.target.value)}
+            />
+          </div>
+
+         <div>
+            <label htmlFor="password">Password: </label>
+            <input type="text" 
+                  placeholder='Enter Password...'
+                  id='password' 
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+            />
+         </div>
+
+      <button type='submit' className='btn'>Submit</button>
       <div>
-        don't have an accout??
-        <Link to={"/"}>register</Link>
+        <p>Not Registered?</p>
+        <Link to="/">Register</Link> 
       </div>
+      </form>
+     </div>
+
+     </div>
     </>
   )
 }
