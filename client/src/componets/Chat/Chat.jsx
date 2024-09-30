@@ -1,5 +1,5 @@
 import axios from 'axios';
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState,useRef  } from 'react'
 import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { io } from 'socket.io-client';
@@ -20,6 +20,12 @@ const Chat = () => {
   const navigate = useNavigate()
 
   const currentUserID = user?._id; 
+
+  const messagesEndRef = useRef(null);
+
+  const scrollToBottom = () => {
+    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+  }; 
 
   useEffect(() => {
     const socket = io('https://chat-app-server-uw6l.onrender.com');
@@ -64,7 +70,11 @@ const Chat = () => {
        
         getMyMessages();
       
-    }, []);
+    }, [id]);
+
+    useEffect(() => {
+      scrollToBottom();
+    }, [messages]);
 
   const submitHandler = (e) => {
     e.preventDefault();
@@ -98,6 +108,7 @@ const Chat = () => {
         {messages.map((msg, index) => (
           <Messages key={index} message={msg.message} sender={msg?.sender === user?._id ? 'me' : 'other'} timeStamp={msg.timestamp} />
         ))}
+        <div ref={messagesEndRef} />
       </div>
 
       <form className='chat-input-container' onSubmit={submitHandler}>
