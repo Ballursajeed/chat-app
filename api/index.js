@@ -34,10 +34,10 @@ app.get("/",(req,res) => {
     res.send("Hello from backend")
 });
 
-import userRouter from "./routes/user.rotues.js";
-import { Chat } from "./models/chat.mode.js";
+import userRouter from "../routes/user.rotues.js";
+import { Chat } from "../models/chat.mode.js";
 import mongoose from "mongoose";
-import { User } from "./models/user.model.js";
+import { User } from "../models/user.model.js";
 app.use('/api/v1/user',userRouter);
 
 const users  = new Map();
