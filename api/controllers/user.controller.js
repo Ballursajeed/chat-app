@@ -37,10 +37,9 @@ const userRegister = async(req,res) => {
 
         let avatar;
 
-        // Check if an avatar image was uploaded
         if (req.files && Array.isArray(req.files.avatar) && req.files.avatar.length > 0) {
             const fileBuffer = req.files.avatar[0].buffer;
-            avatar = await uploadOnCloudinary(fileBuffer);  // Upload directly from buffer
+            avatar = await uploadOnCloudinary(fileBuffer);  
         }
     
         const user = await User.create({
