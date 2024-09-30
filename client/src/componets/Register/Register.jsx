@@ -7,6 +7,7 @@ import { loginStart,loginSuccess } from '../../auth/authSlice.js';
 import './register.css'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css'; // Import the styles
+import Loading from '../Loader/Loader.jsx';
 
 const Register = () => {
 
@@ -24,7 +25,7 @@ const Register = () => {
 
     const hangleSubmit = async(e) => {
       e.preventDefault()
-
+      setLoading(true);
        try {
         const formData = new FormData();
          formData.append("email",email)
@@ -83,14 +84,17 @@ const Register = () => {
                 pauseOnHover: true,
                 draggable: true,
         })
+       }finally {
+        setLoading(false);  // Stop loading after the process completes
        }
 
     }
 
   return (
     <>
-        
-           <div className="registerContainer">
+    {
+      loading ? <Loading /> : <>
+          <div className="registerContainer">
      <div className='register'>
       <h2>Register</h2>
       <form action="" method='post' onSubmit={hangleSubmit}>
@@ -157,6 +161,10 @@ const Register = () => {
         </form>
      </div>
      </div>
+      </>
+    }
+        
+         
       
        
      <ToastContainer />

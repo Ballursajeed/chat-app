@@ -13,6 +13,7 @@ import Chat from "./componets/Chat/Chat";
 import Navbar from "./componets/Navbar/Navbar";
 import Profile from "./componets/Profile/Profile";
 import SingleUser from "./componets/SingleUser/SingleUser";
+import Loading from "./componets/Loader/Loader";
 
 function App() {
 
@@ -50,7 +51,14 @@ function App() {
 
   return (
     <>
-       {!shouldHideNavbar && <Navbar />}
+    {
+      loading ? (
+        <>
+          <Loading />
+        </>
+      ) : (
+        <>
+        {!shouldHideNavbar && <Navbar />}
    <Routes>
     <Route path="/" element={<Register/>}/>
     <Route path="/login" element={<Login/>}/>
@@ -61,7 +69,9 @@ function App() {
     </Route>
    </Routes>
     </>
-  );
+      )
+    }
+       </>
+  )
 }
-
-export default App;
+export default App
