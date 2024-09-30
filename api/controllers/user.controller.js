@@ -1,10 +1,11 @@
 import mongoose from "mongoose";
 import { Chat } from "../models/chat.mode.js";
 import { User } from "../models/user.model.js";
+import { uploadOnCloudinary } from "../cloudinary/cloudinary.js";
 
 const userRegister = async(req,res) => {
     const {username, fullName, password,email} = req.body;
-try {
+     try {
     
         if (!username || !fullName || !password || !email ) {
             return res.status(400).json({
@@ -33,12 +34,21 @@ try {
                 status: 400
             })
         }
+
+        let avatar;
+
+        // Check if an avatar image was uploaded
+        if (req.files && Array.isArray(req.files.avatar) && req.files.avatar.length > 0) {
+            const fileBuffer = req.files.avatar[0].buffer;
+            avatar = await uploadOnCloudinary(fileBuffer);  // Upload directly from buffer
+        }
     
         const user = await User.create({
             username,
             fullName,
             email,
-            password
+            password,
+            avatar: avatar?.url || ''
         });
     
         res.status(201).json({
