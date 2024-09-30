@@ -71,7 +71,7 @@ const Chat = () => {
     
     if (input && id) {
 
-      const socket = io('http://localhost:3000');
+      const socket = io('https://chat-app-server-uw6l.onrender.com');
  
       socket.emit('send-message', {
         message: input,

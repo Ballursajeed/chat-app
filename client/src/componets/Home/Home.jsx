@@ -26,7 +26,7 @@ const Home = () => {
         }
         fetchAllUsers();
        
-        const socket = io('http://localhost:3000');
+        const socket = io('https://chat-app-server-uw6l.onrender.com');
 
         socket.emit('register', {userId:authUser?._id});
 
